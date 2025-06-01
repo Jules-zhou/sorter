@@ -1,0 +1,9 @@
+MANIFEST.in
+readme.md
+setup.py
+sorter.egg-info/PKG-INFO
+sorter.egg-info/SOURCES.txt
+sorter.egg-info/dependency_links.txt
+sorter.egg-info/top_level.txt
+src/__init__.py
+test/test.py

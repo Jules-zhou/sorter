@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: sorter
+Version: 0.1
+Summary: 一个包含多种排序算法实现的项目
+Author: Your Name
+Author-email: your_email@example.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: requires-python
+Dynamic: summary
