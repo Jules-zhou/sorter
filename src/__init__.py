@@ -96,3 +96,35 @@ class Sorter:
                     j -= 1
                 # 将当前元素插入到合适位置
                 arr[j + 1] = key
+
+    def quicksort(self, arr, new=False):
+        if new:
+            # 复制原列表，避免修改原列表
+            new_arr = arr[:]
+            n = len(new_arr)
+            # 递归终止条件：如果数组长度小于等于1，直接返回
+            if n <= 1:
+                return new_arr
+            # 选择基准元素
+            pivot = new_arr[n // 2]
+            # 划分左子数组和右子数组
+            left = [x for x in new_arr if x < pivot]
+            middle = [x for x in new_arr if x == pivot]
+            right = [x for x in new_arr if x > pivot]
+            # 递归排序左子数组和右子数组，并将结果合并
+            return self.quicksort(left, new=True) + middle + self.quicksort(right, new=True)
+        else:
+            n = len(arr)
+            # 递归终止条件：如果数组长度小于等于1，直接返回
+            if n <= 1:
+                return arr
+            # 选择基准元素
+            pivot = arr[n // 2]
+            # 划分左子数组和右子数组
+            left = [x for x in arr if x < pivot]
+            middle = [x for x in arr if x == pivot]
+            right = [x for x in arr if x > pivot]
+            # 递归排序左子数组和右子数组，并将结果合并
+            return self.quicksort(left, new=False) + middle + self.quicksort(right, new=False)
+
+    
