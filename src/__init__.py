@@ -65,3 +65,34 @@ class Sorter:
                         min_index = j
                 # 将找到的最小值与当前轮次的第一个元素交换
                 arr[i], arr[min_index] = arr[min_index], arr[i]
+
+    def insertsort(self, arr, new=False):
+        if new:
+            # 复制原列表，避免修改原列表
+            new_arr = arr[:]
+            n = len(new_arr)
+            # 外层循环控制排序的轮数
+            for i in range(1, n):
+                # 假设当前元素需要插入到已排序部分的合适位置
+                key = new_arr[i]
+                j = i - 1
+                # 内层循环找到插入位置
+                while j >= 0 and new_arr[j] > key:
+                    new_arr[j + 1] = new_arr[j]
+                    j -= 1
+                # 将当前元素插入到合适位置
+                new_arr[j + 1] = key
+            return new_arr
+        else:
+            n = len(arr)
+            # 外层循环控制排序的轮数
+            for i in range(1, n):
+                # 假设当前元素需要插入到已排序部分的合适位置
+                key = arr[i]
+                j = i - 1
+                # 内层循环找到插入位置
+                while j >= 0 and arr[j] > key:
+                    arr[j + 1] = arr[j]
+                    j -= 1
+                # 将当前元素插入到合适位置
+                arr[j + 1] = key
