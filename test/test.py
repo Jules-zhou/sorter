@@ -59,5 +59,17 @@ class TestSorter(unittest.TestCase):
         self.sorter.quicksort(arr, new=False)
         self.assertEqual(arr, sorted(original_arr))
 
+    def test_mergesort_new_true(self):
+        arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+        sorted_arr = self.sorter.mergesort(arr, new=True)
+        self.assertEqual(sorted_arr, sorted(arr))
+        self.assertNotEqual(arr, sorted_arr)
+
+    def test_mergesort_new_false(self):
+        arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+        original_arr = arr[:]
+        self.sorter.mergesort(arr, new=False)
+        self.assertEqual(arr, sorted(original_arr))
+
 if __name__ == '__main__':
     unittest.main()

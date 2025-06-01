@@ -114,17 +114,80 @@ class Sorter:
             # 递归排序左子数组和右子数组，并将结果合并
             return self.quicksort(left, new=True) + middle + self.quicksort(right, new=True)
         else:
-            n = len(arr)
+            def _quicksort_inplace(arr, low, high):
+                if low < high:
+                    pi = self._partition(arr, low, high)
+                    _quicksort_inplace(arr, low, pi - 1)
+                    _quicksort_inplace(arr, pi + 1, high)
+            _quicksort_inplace(arr, 0, len(arr) - 1)
+
+    def _partition(self, arr, low, high):
+        pivot = arr[high]
+        i = low - 1
+        for j in range(low, high):
+            if arr[j] <= pivot:
+                i = i + 1
+                arr[i], arr[j] = arr[j], arr[i]
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+
+    def mergesort(self, arr, new=False):
+        if new:
+            # 复制原列表，避免修改原列表
+            new_arr = arr[:]
+            n = len(new_arr)
             # 递归终止条件：如果数组长度小于等于1，直接返回
             if n <= 1:
-                return arr
-            # 选择基准元素
-            pivot = arr[n // 2]
+                return new_arr
             # 划分左子数组和右子数组
-            left = [x for x in arr if x < pivot]
-            middle = [x for x in arr if x == pivot]
-            right = [x for x in arr if x > pivot]
-            # 递归排序左子数组和右子数组，并将结果合并
-            return self.quicksort(left, new=False) + middle + self.quicksort(right, new=False)
+            mid = n // 2
+            left = new_arr[:mid]
+            right = new_arr[mid:]
+            # 递归排序左子数组和右子数组
+            left_sorted = self.mergesort(left, new=True)
+            right_sorted = self.mergesort(right, new=True)
+            # 合并排序后的左子数组和右子数组
+            return self._merge(left_sorted, right_sorted)
+        else:
+            def _mergesort_inplace(arr, low, high):
+                if low < high:
+                    mid = (low + high) // 2
+                    _mergesort_inplace(arr, low, mid)
+                    _mergesort_inplace(arr, mid + 1, high)
+                    self._merge_inplace(arr, low, mid, high)
+            _mergesort_inplace(arr, 0, len(arr) - 1)
 
-    
+    def _merge_inplace(self, arr, low, mid, high):
+        # 创建临时数组存储左半部分
+        left = arr[low:mid + 1]
+        i = j = 0
+        k = low
+        while i < len(left) and j < high - mid:
+            if left[i] <= arr[mid + 1 + j]:
+                arr[k] = left[i]
+                i += 1
+            else:
+                arr[k] = arr[mid + 1 + j]
+                j += 1
+            k += 1
+        # 将左半部分剩余元素复制回原数组
+        while i < len(left):
+            arr[k] = left[i]
+            i += 1
+            k += 1
+
+    def _merge(self, left, right):
+        # 合并两个已排序的子数组
+        merged = []
+        i = j = 0
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                merged.append(left[i])
+                i += 1
+            else:
+                merged.append(right[j])
+                j += 1
+        # 将剩余的元素添加到合并数组中
+        merged.extend(left[i:])
+        merged.extend(right[j:])
+        return merged
